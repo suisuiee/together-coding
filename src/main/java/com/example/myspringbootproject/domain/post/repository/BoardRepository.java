@@ -8,9 +8,9 @@ import java.util.List;
 public interface BoardRepository {
     boolean createPost(PostDTO postDTO);
 
-    List<PostDTO> getAllPosts();
+    List<PostDTO> findAllPosts();
 
-    PostDTO getPostById(int id);
+    PostDTO findPostById(int id);
 
     boolean updatePost(PostDTO postDTO);
 

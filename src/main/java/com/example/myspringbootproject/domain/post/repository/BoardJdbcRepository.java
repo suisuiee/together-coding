@@ -46,8 +46,6 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
 
             pstmt.executeUpdate();
 
-
-            // Get the generated key (id)
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
@@ -69,8 +67,8 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
     }
 
     @Override
-    public List<PostDTO> getAllPosts() {
-        String sql = "SELECT * FROM tbl_post";
+    public List<PostDTO> findAllPosts() {
+        String sql = "SELECT * FROM tbl_post 리밋 ?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -85,7 +83,9 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
             rs = pstmt.getResultSet();
 
             while (rs.next()) {
-                PostDTO post = new PostDTO();
+                PostDTO post = new PostDTO(
+
+                );
 
                 post.setId(rs.getInt("id"));
                 post.setContent(rs.getString("title"));
@@ -109,7 +109,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
     }
 
     @Override
-    public PostDTO getPostById(int id) {
+    public PostDTO findPostById(int id) {
         String sql = "SELECT * FROM tbl_post WHERE id = (?)";
 
         Connection conn = null;
@@ -158,7 +158,6 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
             + "attachment = (?), "
             + "ctg_id = (?) "
             + "WHERE id = (?)";
-
 
         Connection conn = null;
         PreparedStatement pstmt = null;

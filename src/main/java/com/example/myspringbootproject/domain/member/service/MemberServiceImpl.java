@@ -1,5 +1,6 @@
 package com.example.myspringbootproject.domain.member.service;
 
+import com.example.myspringbootproject.domain.member.dto.MemberDTO;
 import com.example.myspringbootproject.domain.member.model.MemberEntity;
 import com.example.myspringbootproject.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,10 @@ public class MemberServiceImpl implements MemberService{
 
 
     @Override
-    public MemberEntity signUp(MemberEntity memberEntity) {
-        memberRepository.save(memberEntity);
-        return memberRepository.getById(memberEntity.getId());
+    public int signUp(MemberDTO memberDTO) {
+        MemberEntity memberEntity = MemberDTO.toEntity(memberDTO);
+        // TODO : 여기서 유효성 검사 하기 (id, name unique 체크)
+        return memberRepository.save(memberEntity).getId();
     }
 
     @Override

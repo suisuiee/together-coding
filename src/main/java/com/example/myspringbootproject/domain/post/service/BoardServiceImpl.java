@@ -19,12 +19,12 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public List<PostDTO> getAllPosts() {
-        return boardRepository.getAllPosts();
+        return boardRepository.findAllPosts();
     }
 
     @Override
     public PostDTO getPostById(int id) {
-        return boardRepository.getPostById(id);
+        return boardRepository.findPostById(id);
     }
 
     @Override

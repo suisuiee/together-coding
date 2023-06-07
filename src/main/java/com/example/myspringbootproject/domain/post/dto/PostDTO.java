@@ -20,8 +20,8 @@ public class PostDTO {
     private String title;
     private String content;
     private String attachment;
-    private String isVisible;
-    private int ctgId;
+    private String isVisible; // 게시물이 보이는지 여부에 대한 값
+    private int ctgId; // 카테고리
     private int userId;
     private Date createdAt;
     private Date updatedAt;

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("board")
+@RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
 
@@ -39,7 +39,7 @@ public class BoardController {
     @ResponseBody
     public ResponseEntity<?> getAllPostList() {
 
-        // TodoList 를 가져온다.
+        // postsList 를 가져온다.
         List<PostDTO> postsList = boardService.getAllPosts();
         ResponseDTO<PostDTO> response = ResponseDTO.<PostDTO>builder().data(postsList).build();
         return ResponseEntity.ok().body(response);
@@ -56,7 +56,10 @@ public class BoardController {
         List<PostDTO> postsList = new ArrayList<>();
         postsList.add(boardService.getPostById(id));
 
-        ResponseDTO<PostDTO> response = ResponseDTO.<PostDTO>builder().data(postsList).build();
+        ResponseDTO<PostDTO> response = ResponseDTO
+            .<PostDTO>builder()
+            .data(postsList)
+            .build();
         return ResponseEntity.ok().body(response);
     }
 

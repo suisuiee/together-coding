@@ -6,7 +6,6 @@ import com.example.myspringbootproject.domain.member.model.MemberEntity;
 import java.util.Optional;
 
 public interface MemberService {
-    MemberEntity signUp(MemberEntity memberEntity);
+    int signUp(MemberDTO memberDTO);
     Optional<MemberEntity> findUserById(int id);
-
 }
