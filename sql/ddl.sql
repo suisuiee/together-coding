@@ -9,12 +9,12 @@ CREATE TABLE tbl_user
     password    VARCHAR(255) NOT NULL,
     email       VARCHAR(50)  NOT NULL UNIQUE ,
     phone       VARCHAR(11)  NOT NULL,
-    birthdate   DATE         NOT NULL,
+    birthdate   DATE         NULL,
     profile_url TEXT         NULL,
     role_id     INT          NOT NULL,
     grade_id    INT          NOT NULL,
     created_at  DATE     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATE     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATE     NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 
     primary key (id)
 );

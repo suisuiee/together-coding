@@ -1,8 +1,5 @@
 package com.example.myspringbootproject;
 
-import com.example.myspringbootproject.domain.member.repository.MemberRepository;
-import com.example.myspringbootproject.domain.member.service.MemberService;
-import com.example.myspringbootproject.domain.member.service.MemberServiceImpl;
 import com.example.myspringbootproject.domain.post.repository.BoardJdbcRepository;
 import com.example.myspringbootproject.domain.post.repository.BoardRepository;
 import com.example.myspringbootproject.domain.post.service.BoardService;

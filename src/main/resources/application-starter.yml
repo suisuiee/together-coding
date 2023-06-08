@@ -9,6 +9,18 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html   # 파일 확장자
+    # TODO : 배포시 true 처리
+    cache: false # default true 개발 시에는 false 로 두는게 좋다.
+    enabled: true
 
   datasource:
     hikari:
@@ -26,3 +38,4 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: none
+
