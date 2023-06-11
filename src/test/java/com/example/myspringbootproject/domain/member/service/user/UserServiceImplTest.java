@@ -1,4 +1,4 @@
-package com.example.myspringbootproject.domain.member.service;
+package com.example.myspringbootproject.domain.member.service.user;
 
 import com.example.myspringbootproject.SpringConfig;
 import com.example.myspringbootproject.domain.user.dto.UserDTO;

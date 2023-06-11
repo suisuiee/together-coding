@@ -13,14 +13,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/member")
+@RequestMapping("/api/user")
 public class UserController {
     private final UserService memberService;
-
-    @GetMapping("/test")
-    public int testController(@RequestParam int id){
-        return id;
-    }
 
     @PostMapping
     public ResponseEntity<?> signUpUser(@RequestBody UserDTO userDTO){

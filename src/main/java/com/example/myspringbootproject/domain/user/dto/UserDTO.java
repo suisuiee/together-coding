@@ -8,7 +8,9 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
+@Builder
 public class UserDTO {
     private int id;
     private String name;
@@ -22,21 +24,21 @@ public class UserDTO {
     private Date createAt;
     private Date updateAt;
 
-    @Builder
-    public UserDTO(int id, String name, String password, String email, String phone, Date birthDate, String profileUrl, int roleId, int gradeId,
-                   Date createAt, Date updateAt) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.profileUrl = profileUrl;
-        this.roleId = roleId;
-        this.gradeId = gradeId;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
-    }
+//    @Builder
+//    public UserDTO(int id, String name, String password, String email, String phone, Date birthDate, String profileUrl, int roleId, int gradeId,
+//                   Date createAt, Date updateAt) {
+//        this.id = id;
+//        this.name = name;
+//        this.password = password;
+//        this.email = email;
+//        this.phone = phone;
+//        this.birthDate = birthDate;
+//        this.profileUrl = profileUrl;
+//        this.roleId = roleId;
+//        this.gradeId = gradeId;
+//        this.createAt = createAt;
+//        this.updateAt = updateAt;
+//    }
 
     // Entity -> DTO 변환
     public UserDTO(final UserEntity userEntity) {

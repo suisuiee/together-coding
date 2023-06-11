@@ -1,6 +1,7 @@
 /* user */
+const registerButton = document.getElementById("registerButton") || null;
+const loginButton = document.getElementById("loginButton") || null;
 
-const registerButton = document.getElementById("registerButton");
 
 /** 1.
  * user sign-up (register, create-user ...)
@@ -18,14 +19,17 @@ registerButton.addEventListener("click", (e) => {
     };
 
     // rest api call
-    axios.post('/api/member', userDTO)
+    axios.post('/api/user', userDTO)
         .then((response) => {
             // TODO : 성공시 alert 처리
+            // TODO : status 도 받기
             console.log("response", response);
-            location.replace('/');
+            alert("성공");
+            location.replace('/users/sign-in');
         })
         .catch((error) => {
             // TODO: error 처리(ex) 메인으로 보내버리기
             console.log("error", error);
+            alert("실패");
         });
 });

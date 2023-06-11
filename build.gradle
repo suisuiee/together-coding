@@ -36,15 +36,17 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // 뷰
-     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'						//타임리프 레이아웃
-     implementation 'org.webjars:bootstrap:5.2.3'												//boot strap
-     implementation 'org.webjars:jquery:3.6.4'													//jquery
-     // implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'    //타임리프에 시큐리티 적용
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    implementation 'org.webjars:bootstrap:5.2.3'
+    implementation 'org.webjars:jquery:3.6.4'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 
 
     // 시큐리티
-    // implementation 'org.springframework.boot:spring-boot-starter-security:3.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-security:3.1.0'
+    testImplementation 'org.springframework.security:spring-security-test:6.1.0'
+
 
     // 테스트
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
