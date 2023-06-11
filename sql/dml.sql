@@ -4,8 +4,6 @@
 SELECT * FROM TBL_USER;
 SELECT * FROM TBL_POST;
 
-select  count(*) from TBL_USER;
-
 -- INSERT User
 insert into tbl_user(name, password, email, phone, birthdate, role_id, grade_id)
 values ('subin', '12345', 'subin@email.com', '01012345678','1992-09-08', '10', '10');

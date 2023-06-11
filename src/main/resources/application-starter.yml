@@ -19,7 +19,7 @@ spring:
     prefix: classpath:/templates/
     suffix: .html   # 파일 확장자
     # TODO : 배포시 true 처리
-    cache: false # default true,  개발 시에는 ture 로 두는게 좋다.
+    cache: false # default true 개발 시에는 false 로 두는게 좋다.
     enabled: true
 
   datasource:
