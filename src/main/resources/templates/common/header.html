@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:fragment="commonHeader">
+    <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                <svg class="bi" width="32" height="32" role="img" aria-label="Bootstrap">
+
+                </svg></a>
+        </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/" class="nav-link px-2 link-secondary">홈으로</a></li>
+            <li><a href="#" class="nav-link px-2">Features</a></li>
+            <li><a href="#" class="nav-link px-2">Pricing</a></li>
+            <li><a href="#" class="nav-link px-2">FAQs</a></li>
+            <li><a href="#" class="nav-link px-2">About</a></li>
+        </ul>
+
+        <!-- 로그인 전 메뉴-->
+        <div sec:authorize="isAnonymous()">
+            <button type="button" class="btn btn-outline-success me-2" th:onclick="|location.href='@{/users/sign-in}'|" style="border-color: #8BC34A; color: #8BC34A;">로그인</button>
+            <button type="button" class="btn " th:onclick="|location.href='@{/users/sign-up}'|" style="background-color: #8BC34A; color:white;">회원가입</button>
+        </div>
+
+        <!-- 로그인 후 메뉴 -->
+        <div sec:authorize="isAuthenticated()">
+            <button type="button" class="btn btn-outline-success me-2" th:onclick="|location.href='@{/member/profile}'|" style="border-color: #8BC34A; color: #8BC34A;">회원 정보</button>
+            <button type="button" class="btn" id="logoutButton" th:onclick="|location.href='@{/users/sign-out}'|" style="background-color: #8BC34A; color:white;">로그아웃</button>
+        </div>
+    </header>
+</div>
+</html>
