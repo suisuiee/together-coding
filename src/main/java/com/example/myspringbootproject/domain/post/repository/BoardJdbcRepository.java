@@ -38,7 +38,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            pstmt.setInt(1, postDTO.getUserId());
+            pstmt.setLong(1, postDTO.getUserId());
             pstmt.setString(2, postDTO.getTitle());
             pstmt.setString(3, postDTO.getContent());
             pstmt.setString(4, postDTO.getAttachment());
@@ -91,7 +91,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
                 post.setContent(rs.getString("title"));
                 post.setTitle(rs.getString("content"));
                 post.setAttachment(rs.getString("attachment"));
-                post.setIsVisible(rs.getString("is_visible"));
+                post.setIsVisible(rs.getInt("is_visible"));
                 post.setCtgId(rs.getInt("ctg_id"));
                 post.setCreatedAt(rs.getDate("created_at"));
                 post.setUpdatedAt(rs.getDate("updated_at"));
@@ -132,7 +132,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
                 post.setTitle(rs.getString("title"));
                 post.setContent(rs.getString("content"));
                 post.setAttachment(rs.getString("attachment"));
-                post.setIsVisible(rs.getString("is_visible"));
+                post.setIsVisible(rs.getInt("is_visible"));
                 post.setCtgId(rs.getInt("ctg_id"));
                 post.setCreatedAt(rs.getDate("created_at"));
                 post.setUpdatedAt(rs.getDate("updated_at"));
@@ -170,7 +170,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
             pstmt.setString(2, postDTO.getContent());
             pstmt.setString(3, postDTO.getAttachment());
             pstmt.setInt(4, postDTO.getCtgId());
-            pstmt.setInt(5, postDTO.getId());
+            pstmt.setLong(5, postDTO.getId());
 
             pstmt.executeUpdate();
 

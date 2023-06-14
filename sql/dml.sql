@@ -13,6 +13,10 @@ insert into TBL_POST(user_id, title, content, ctg_id)
 values ('1', '타이틀', '컨텐츠', '10');
 insert into TBL_POST(user_id, title, content, ctg_id)
 values ('1', '타이틀2', '컨텐츠2', '20');
+insert into TBL_POST(user_id, title, content, ctg_id)
+values ('2', '2 user 타이틀', '컨텐츠', '10');
+insert into TBL_POST(user_id, title, content, ctg_id)
+values ('2', '2 user 타이틀2', '컨텐츠2', '20');
 
 -- UPDATE POST
 update TBL_POST
@@ -21,3 +25,7 @@ set  title = '타이틀 수정',
      CTG_ID = 20,
      ATTACHMENT = '첨부파일.pdf'
 where id = 1;
+
+-- delete
+delete from TBL_POST where id=1;
+delete from TBL_USER where id=1;

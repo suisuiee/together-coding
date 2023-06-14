@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String email);
 
     @Override
-    Optional<UserEntity> findById(Integer integer);
+    Optional<UserEntity> findById(Long id);
 
     @Override
-    List<UserEntity> findAllById(Iterable<Integer> integers);
-
+    List<UserEntity> findAllById(Iterable<Long> longs);
 }
