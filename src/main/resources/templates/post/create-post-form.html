@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        margin-top: 30px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        margin-top: 10px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        margin-top: 10px;
+    }
+
+    .form-control-file {
+        height: calc(2.25rem + 2px);
+    }
+</style>
+<div layout:fragment="content">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form>
+                    <!--                    <div class="form-group">-->
+                    <!--                        <label for="category">카테고리</label>-->
+                    <!--                        <select class="form-control" id="category">-->
+                    <!--                            <option>카테고리를 선택하세요</option>-->
+                    <!--                            <option>옵션 1</option>-->
+                    <!--                            <option>옵션 2</option>-->
+                    <!--                            <option>옵션 3</option>-->
+                    <!--                        </select>-->
+                    <!--                    </div>-->
+                    <div class="form-group">
+                        <label for="title">제목</label>
+                        <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">내용</label>
+                        <textarea class="form-control" id="content" rows="8" placeholder="내용을 입력하세요"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="attachment">첨부파일</label>
+                        <input type="file" class="form-control-file" id="attachment">
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-secondary" id="postRegisterBtn">작성 완료</button>
+                        <button type="reset" class="btn btn-secondary">작성 취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS 파일 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
+</div>
+</html>

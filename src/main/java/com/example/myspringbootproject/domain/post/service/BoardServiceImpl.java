@@ -1,7 +1,7 @@
 package com.example.myspringbootproject.domain.post.service;
 
 import com.example.myspringbootproject.domain.post.repository.BoardRepository;
-import com.example.myspringbootproject.domain.post.dto.PostDTO;
+import com.example.myspringbootproject.domain.post.dto.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +13,22 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
 
     @Override
-    public boolean createPost(PostDTO postDTO) {
-        return boardRepository.createPost(postDTO);
+    public boolean createPost(Post post) {
+        return boardRepository.createPost(post);
     }
 
     @Override
-    public List<PostDTO> getAllPosts() {
+    public List<Post> getAllPosts() {
         return boardRepository.findAllPosts();
     }
 
     @Override
-    public PostDTO getPostById(int id) {
+    public Post getPostById(int id) {
         return boardRepository.findPostById(id);
     }
 
     @Override
-    public boolean updatePost(PostDTO postDTO) {
-        return boardRepository.updatePost(postDTO);
+    public boolean updatePost(Post post) {
+        return boardRepository.updatePost(post);
     }
 }

@@ -31,13 +31,11 @@ public class WebSecurityConfig {
     // 로그인 전에만 접근 가능
     private static final String[] AUTH_ANONYMOUS_LIST = {
         "/users/sign-up", "/users/sign-in", "/users/sign-up-form", "/users/sign-in-form",
-        "/api/user"
     };
 
     // 인증 제외
     private static final String[] AUTH_WHITE_LIST = {
-//        "/users/sign-up", "/users/sign-in", "/users/sign-up-form", "/users/sign-in-form",
-//        "/api/user"
+        "/api/user", "/login"
     };
 
     // 특정 HTTP 요청에 대한 웹 기반 보안 구성
