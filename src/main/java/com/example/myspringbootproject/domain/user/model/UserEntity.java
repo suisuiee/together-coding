@@ -1,5 +1,6 @@
 package com.example.myspringbootproject.domain.user.model;
 
+import com.example.myspringbootproject.domain.post.model.PostEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,17 +9,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+
+
+@Getter @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tbl_user")
 public class UserEntity implements UserDetails {
     @Id
@@ -58,13 +60,26 @@ public class UserEntity implements UserDetails {
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
+    // post 랑 연결
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<PostEntity> posts = new ArrayList<>();
 
-
-    @Builder
     public UserEntity(String email, String password){
         this.email = email;
         this.password = password;
     }
+
+    public void addPost(PostEntity post) {
+        posts.add(post);
+        post.setUser(this);
+    }
+
+    public void removePost(PostEntity post) {
+        posts.remove(post);
+        post.setUser(null);
+    }
+
 
     // TODO:  스프링 시큐리티 UserDetails 구현하기
 

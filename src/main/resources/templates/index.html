@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div class="container">
     <div>
@@ -26,7 +26,9 @@
                     style="background-color: #8BC34A; color:white;">로그아웃
             </button>
         </div>
+
         </p>
+        <a th:href="@{/post/create-post}">포스트 작성하기</a>
     </div>
 </div> <!-- /container -->
 </body>
