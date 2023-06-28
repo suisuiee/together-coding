@@ -3,11 +3,13 @@ package com.example.myspringbootproject.domain.post.controller;
 import com.example.myspringbootproject.common.exception.UserNotFoundException;
 import com.example.myspringbootproject.domain.post.dto.AddPostRequest;
 import com.example.myspringbootproject.domain.post.dto.Post;
+import com.example.myspringbootproject.domain.post.dto.UpdatePostRequest;
 import com.example.myspringbootproject.domain.post.repository.PostRepository;
 import com.example.myspringbootproject.domain.post.service.PostService;
 import com.example.myspringbootproject.domain.user.dto.UserDTO;
 import com.example.myspringbootproject.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.sql.Update;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.nio.charset.StandardCharsets;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -133,6 +136,41 @@ class PostControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.data[0].content").value(content))
             .andExpect(jsonPath("$.data[0].title").value(title));
+
+    }
+
+    @Test
+    public void 포스트_수정_컨트롤러_테스트() throws Exception, UserNotFoundException {
+        //given
+        String url = "/api/post/{id}";
+        String title = "title";
+        String content = "content";
+
+        long userId = getUserEntity();
+
+        Post postTest1 = createPostTest(title, content, 10, userId);
+
+        UpdatePostRequest updatePostRequest = new UpdatePostRequest();
+        updatePostRequest.setTitle("게시글 타이틀 수정수정");
+        updatePostRequest.setContent("게시글 내용 수정수정");
+        updatePostRequest.setCtgId(30);
+
+
+        // 객체 JSON 으로 직렬화
+        String requestBody = objectMapper.writeValueAsString(updatePostRequest);
+
+        //when
+        // 설정한 내용 바탕으로 요청 전송
+        ResultActions resultActions = mockMvc.perform(put(url, postTest1.getId())
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(requestBody));
+
+
+        //then
+        System.out.println("resultActions = "
+            + resultActions.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8));
+        resultActions
+            .andExpect(status().isOk());
 
     }
 

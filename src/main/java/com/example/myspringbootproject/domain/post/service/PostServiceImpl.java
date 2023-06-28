@@ -3,6 +3,7 @@ package com.example.myspringbootproject.domain.post.service;
 import com.example.myspringbootproject.common.exception.UserNotFoundException;
 import com.example.myspringbootproject.domain.post.dto.AddPostRequest;
 import com.example.myspringbootproject.domain.post.dto.Post;
+import com.example.myspringbootproject.domain.post.dto.UpdatePostRequest;
 import com.example.myspringbootproject.domain.post.mapper.PostMapper;
 import com.example.myspringbootproject.domain.post.model.PostEntity;
 import com.example.myspringbootproject.domain.post.repository.PostRepository;
@@ -69,11 +70,30 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
 
+    /**
+     * 게시글 단건(id)으로 받아오기
+     * @param id
+     * @return
+     */
     @Override
     public Post findPostById(Long id) {
         PostEntity postEntity = postRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Post with id " + id + " not found"));
 
+        Post post = PostMapper.INSTANCE.toDTO(postEntity);
+        return post;
+    }
+
+    @Override
+    @Transactional
+    public Post updatePost(Long id, UpdatePostRequest request) {
+        PostEntity postEntity = postRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("post not found " + id));
+
+        // Transactional 에 의해 commit 됨
+        postEntity.update(request);
+
+        // Entity -> DTO
         Post post = PostMapper.INSTANCE.toDTO(postEntity);
         return post;
     }

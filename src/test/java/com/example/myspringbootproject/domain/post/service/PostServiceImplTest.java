@@ -3,6 +3,7 @@ package com.example.myspringbootproject.domain.post.service;
 import com.example.myspringbootproject.common.exception.UserNotFoundException;
 import com.example.myspringbootproject.domain.post.dto.AddPostRequest;
 import com.example.myspringbootproject.domain.post.dto.Post;
+import com.example.myspringbootproject.domain.post.dto.UpdatePostRequest;
 import com.example.myspringbootproject.domain.post.model.PostEntity;
 import com.example.myspringbootproject.domain.user.dto.UserDTO;
 import com.example.myspringbootproject.domain.user.repository.UserRepository;
@@ -167,6 +168,38 @@ class PostServiceImplTest {
 
         //then
         assertThat(posts).isNotNull();
+
+    }
+
+
+    @Test
+    public void 포스트_업데이트_테스트() throws Exception, UserNotFoundException {
+        //given
+        AddPostRequest addPostRequest1 = new AddPostRequest();
+        addPostRequest1.setTitle("게시글 테스트 타이틀");
+        addPostRequest1.setContent("게시글 테스트 컨텐츠");
+        addPostRequest1.setCtgId(10);
+
+        UpdatePostRequest updatePostRequest = new UpdatePostRequest();
+        updatePostRequest.setTitle("게시글 타이틀 수정수정");
+        updatePostRequest.setContent("게시글 내용 수정수정");
+        updatePostRequest.setCtgId(30);
+
+        long userId = getUserEntity();
+        addPostRequest1.setUserId(userId);
+
+        Post post1 = postService.createPost(addPostRequest1);
+
+        //when
+        Post updatedPost = postService.updatePost(userId, updatePostRequest);
+        System.out.println("updatedPost = " + updatedPost);
+
+        //then
+        assertThat(updatedPost).isNotNull();
+        assertEquals(updatePostRequest.getTitle(), updatedPost.getTitle(), "게시글 제목이 수정되어야 한다.");
+        assertEquals(updatePostRequest.getContent(), updatedPost.getContent(), "게시글 컨텐츠가 수정되어야 한다.");
+        assertEquals(updatePostRequest.getCtgId(), updatedPost.getCtgId(), "게시글 컨텐츠가 수정되어야 한다.");
+
 
     }
 

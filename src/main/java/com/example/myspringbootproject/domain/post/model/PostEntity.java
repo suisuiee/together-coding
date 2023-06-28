@@ -1,6 +1,7 @@
 package com.example.myspringbootproject.domain.post.model;
 
 import com.example.myspringbootproject.domain.post.dto.Post;
+import com.example.myspringbootproject.domain.post.dto.UpdatePostRequest;
 import com.example.myspringbootproject.domain.user.model.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -57,5 +58,13 @@ public class PostEntity {
 
     public UserEntity getUserEntity() {
         return userEntity;
+    }
+
+    // == 비즈니스 로직 == //
+    public void update(UpdatePostRequest request){
+        this.title = request.getTitle();
+        this.content = request.getContent();
+        this.attachment = request.getAttachment();
+        this.ctgId = request.getCtgId();
     }
 }
