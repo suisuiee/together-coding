@@ -3,6 +3,10 @@ server:
   error:
     whitelabel:
       enabled: false
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
 
 spring:
   h2:

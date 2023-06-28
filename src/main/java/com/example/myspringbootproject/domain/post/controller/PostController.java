@@ -5,6 +5,7 @@ import com.example.myspringbootproject.common.response.ApiResponse;
 import com.example.myspringbootproject.common.response.ResponseDTO;
 import com.example.myspringbootproject.domain.post.dto.AddPostRequest;
 import com.example.myspringbootproject.domain.post.dto.Post;
+import com.example.myspringbootproject.domain.post.dto.UpdatePostRequest;
 import com.example.myspringbootproject.domain.post.mapper.PostMapper;
 import com.example.myspringbootproject.domain.post.model.PostEntity;
 import com.example.myspringbootproject.domain.post.service.PostService;
@@ -80,7 +81,7 @@ public class PostController {
             List<Post> posts = postService.findAll();
 
             ApiResponse apiResponse = ApiResponse
-                .create(HttpStatus.OK, "ost list received successfully.", posts);
+                .create(HttpStatus.OK, "Post list received successfully.", posts);
 
             return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
         } catch (Exception e) {
@@ -89,7 +90,28 @@ public class PostController {
     }
 
     /**
+     * 포스트 업데이트
+     * @param id
+     * @param request
+     * @return
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updatePost(
+        @PathVariable("id") Long id, @RequestBody UpdatePostRequest request) {
+        try {
+            Post post = postService.updatePost(id, request);
+            ApiResponse apiResponse = ApiResponse
+                .create(HttpStatus.OK, "Post update successfully.", post);
+            return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+        } catch (Exception e) {
+            return handleException(e);
+        }
+    }
+
+
+    /**
      * Exception Handler
+     *
      * @param e
      * @return
      */
