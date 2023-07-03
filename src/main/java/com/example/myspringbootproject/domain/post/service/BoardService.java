@@ -1,18 +1,18 @@
 package com.example.myspringbootproject.domain.post.service;
 
-import com.example.myspringbootproject.domain.post.dto.PostDTO;
+import com.example.myspringbootproject.domain.post.dto.Post;
 
 import java.util.List;
 
 public interface BoardService {
 
-    boolean createPost(PostDTO postDTO);
+    boolean createPost(Post post);
 
-    List<PostDTO> getAllPosts();
+    List<Post> getAllPosts();
 
-    PostDTO getPostById(int id);
+    Post getPostById(int id);
 
-    boolean updatePost(PostDTO postDTO);
+    boolean updatePost(Post post);
 
 
 }

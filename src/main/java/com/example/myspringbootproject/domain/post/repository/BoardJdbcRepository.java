@@ -1,6 +1,6 @@
 package com.example.myspringbootproject.domain.post.repository;
 
-import com.example.myspringbootproject.domain.post.dto.PostDTO;
+import com.example.myspringbootproject.domain.post.dto.Post;
 import jakarta.annotation.PostConstruct;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -26,7 +26,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
     }
 
     @Override
-    public boolean createPost(PostDTO postDTO) {
+    public boolean createPost(Post post) {
         String sql = "insert into TBL_POST(user_id, title, content, attachment, ctg_id) " +
             "values ((?), (?), (?), (?), (?))";
 
@@ -38,18 +38,18 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            pstmt.setInt(1, postDTO.getUserId());
-            pstmt.setString(2, postDTO.getTitle());
-            pstmt.setString(3, postDTO.getContent());
-            pstmt.setString(4, postDTO.getAttachment());
-            pstmt.setInt(5, postDTO.getCtgId());
+            pstmt.setLong(1, post.getUserId());
+            pstmt.setString(2, post.getTitle());
+            pstmt.setString(3, post.getContent());
+            pstmt.setString(4, post.getAttachment());
+            pstmt.setInt(5, post.getCtgId());
 
             pstmt.executeUpdate();
 
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
-                    postDTO.setId(id);
+                    post.setId(id);
                 } else {
                     throw new SQLException("게시물 작성에 실패했습니다. 게시물의 ID를 받지 못했습니다.");
                 }
@@ -67,14 +67,14 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
     }
 
     @Override
-    public List<PostDTO> findAllPosts() {
+    public List<Post> findAllPosts() {
         String sql = "SELECT * FROM tbl_post 리밋 ?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        ArrayList<PostDTO> posts = new ArrayList<>();
+        ArrayList<Post> posts = new ArrayList<>();
         try{
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -83,7 +83,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
             rs = pstmt.getResultSet();
 
             while (rs.next()) {
-                PostDTO post = new PostDTO(
+                Post post = new Post(
 
                 );
 
@@ -91,7 +91,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
                 post.setContent(rs.getString("title"));
                 post.setTitle(rs.getString("content"));
                 post.setAttachment(rs.getString("attachment"));
-                post.setIsVisible(rs.getString("is_visible"));
+                post.setIsVisible(rs.getInt("is_visible"));
                 post.setCtgId(rs.getInt("ctg_id"));
                 post.setCreatedAt(rs.getDate("created_at"));
                 post.setUpdatedAt(rs.getDate("updated_at"));
@@ -109,7 +109,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
     }
 
     @Override
-    public PostDTO findPostById(int id) {
+    public Post findPostById(int id) {
         String sql = "SELECT * FROM tbl_post WHERE id = (?)";
 
         Connection conn = null;
@@ -126,13 +126,13 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
             rs = pstmt.getResultSet();
 
             while (rs.next()) {
-                PostDTO post = new PostDTO();
+                Post post = new Post();
 
                 post.setId(rs.getInt("id"));
                 post.setTitle(rs.getString("title"));
                 post.setContent(rs.getString("content"));
                 post.setAttachment(rs.getString("attachment"));
-                post.setIsVisible(rs.getString("is_visible"));
+                post.setIsVisible(rs.getInt("is_visible"));
                 post.setCtgId(rs.getInt("ctg_id"));
                 post.setCreatedAt(rs.getDate("created_at"));
                 post.setUpdatedAt(rs.getDate("updated_at"));
@@ -150,7 +150,7 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
     }
 
     @Override
-    public boolean updatePost(PostDTO postDTO) {
+    public boolean updatePost(Post post) {
         String sql = "UPDATE tbl_post "
             + "SET "
             + "title = (?), "
@@ -166,11 +166,11 @@ public class BoardJdbcRepository extends JdbcDaoSupport implements BoardReposito
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            pstmt.setString(1, postDTO.getTitle());
-            pstmt.setString(2, postDTO.getContent());
-            pstmt.setString(3, postDTO.getAttachment());
-            pstmt.setInt(4, postDTO.getCtgId());
-            pstmt.setInt(5, postDTO.getId());
+            pstmt.setString(1, post.getTitle());
+            pstmt.setString(2, post.getContent());
+            pstmt.setString(3, post.getAttachment());
+            pstmt.setInt(4, post.getCtgId());
+            pstmt.setLong(5, post.getId());
 
             pstmt.executeUpdate();
 

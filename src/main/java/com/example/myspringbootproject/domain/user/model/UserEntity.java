@@ -1,24 +1,32 @@
 package com.example.myspringbootproject.domain.user.model;
 
+import com.example.myspringbootproject.domain.post.model.PostEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+
+
+@Getter @Setter
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@Entity
 @Table(name = "tbl_user")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
-    private int id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -52,4 +60,81 @@ public class UserEntity {
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
+    // post 랑 연결
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<PostEntity> posts = new ArrayList<>();
+
+    public UserEntity(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
+
+    public void addPost(PostEntity post) {
+        posts.add(post);
+        post.setUser(this);
+    }
+
+    public void removePost(PostEntity post) {
+        posts.remove(post);
+        post.setUser(null);
+    }
+
+
+    // TODO:  스프링 시큐리티 UserDetails 구현하기
+
+    /**
+     * 권한 반한
+     * @return
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("user"));
+    }
+
+    /**
+     * 사용자 id 반환(고유값)
+     * @return
+     */
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    /**
+     * 계정 만료 여부 반환
+     * (true) 만료되지 않았음
+     * @return
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    /**
+     * 계정 잠금 여부 반환
+     * (true) 잠금되지 않았음
+     * @return
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    /**
+     * 패스워드 만료 여부
+     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    /**
+     * 계쩡 사용 여부
+     * @return
+     */
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

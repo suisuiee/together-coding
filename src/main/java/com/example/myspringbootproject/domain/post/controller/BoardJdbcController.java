@@ -1,7 +1,7 @@
 package com.example.myspringbootproject.domain.post.controller;
 
-import com.example.myspringbootproject.domain.post.dto.PostDTO;
 import com.example.myspringbootproject.common.response.ResponseDTO;
+import com.example.myspringbootproject.domain.post.dto.Post;
 import com.example.myspringbootproject.domain.post.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +13,8 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/board")
-public class BoardController {
+@RequestMapping("/boardJdbc")
+public class BoardJdbcController {
     private final BoardService boardService;
 
     @GetMapping("/test")
@@ -24,9 +24,9 @@ public class BoardController {
 
     @PostMapping("/post")
     @ResponseBody
-    public ResponseEntity<?> createPost(@RequestBody PostDTO postDTO){
+    public ResponseEntity<?> createPost(@RequestBody Post post){
         List<Boolean> postsList = new ArrayList<>();
-        postsList.add(boardService.createPost(postDTO));
+        postsList.add(boardService.createPost(post));
         ResponseDTO<Boolean> response = ResponseDTO.<Boolean>builder().data(postsList).build();
         return ResponseEntity.ok().body(response);
     }
@@ -40,8 +40,8 @@ public class BoardController {
     public ResponseEntity<?> getAllPostList() {
 
         // postsList 를 가져온다.
-        List<PostDTO> postsList = boardService.getAllPosts();
-        ResponseDTO<PostDTO> response = ResponseDTO.<PostDTO>builder().data(postsList).build();
+        List<Post> postsList = boardService.getAllPosts();
+        ResponseDTO<Post> response = ResponseDTO.<Post>builder().data(postsList).build();
         return ResponseEntity.ok().body(response);
     }
 
@@ -53,11 +53,11 @@ public class BoardController {
     @GetMapping(value = "/post")
     @ResponseBody
     public ResponseEntity<?> getPostById(@RequestParam(required = false) int id ) {
-        List<PostDTO> postsList = new ArrayList<>();
+        List<Post> postsList = new ArrayList<>();
         postsList.add(boardService.getPostById(id));
 
-        ResponseDTO<PostDTO> response = ResponseDTO
-            .<PostDTO>builder()
+        ResponseDTO<Post> response = ResponseDTO
+            .<Post>builder()
             .data(postsList)
             .build();
         return ResponseEntity.ok().body(response);
@@ -65,14 +65,14 @@ public class BoardController {
 
     /**
      * post update
-     * @param postDTO
+     * @param post
      * @return
      */
     @PutMapping(value = "/post")
     @ResponseBody
-    public ResponseEntity<?> updatePostById(@RequestBody PostDTO postDTO) {
+    public ResponseEntity<?> updatePostById(@RequestBody Post post) {
         List<Boolean> postsList = new ArrayList<>();
-        postsList.add(boardService.updatePost(postDTO));
+        postsList.add(boardService.updatePost(post));
 
         ResponseDTO<Boolean> response = ResponseDTO.<Boolean>builder().data(postsList).build();
         return ResponseEntity.ok().body(response);

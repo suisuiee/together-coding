@@ -5,7 +5,8 @@ import com.example.myspringbootproject.domain.user.model.UserEntity;
 
 import java.util.Optional;
 
-public interface UserService {
-    int signUp(UserDTO userDTO);
-    Optional<UserEntity> findUserById(int id);
+public interface UserService{
+    long signUp(UserDTO userDTO);
+    Optional<UserEntity> findUserById(long id);
+    Optional<UserEntity> findUserByEmail(String email);
 }

@@ -13,22 +13,17 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/member")
+@RequestMapping("/api/user")
 public class UserController {
     private final UserService memberService;
-
-    @GetMapping("/test")
-    public int testController(@RequestParam int id){
-        return id;
-    }
 
     @PostMapping
     public ResponseEntity<?> signUpUser(@RequestBody UserDTO userDTO){
         try{
-            List<Integer> userId = new ArrayList<>();
+            List<Long> userId = new ArrayList<>();
             userId.add(memberService.signUp(userDTO));
 
-            ResponseDTO<Integer> response = ResponseDTO.<Integer>builder().data(userId).build();
+            ResponseDTO<Long> response = ResponseDTO.<Long>builder().data(userId).build();
 
             // TODO ResponseEntity.ok(url).body(response) 로 변환해 보기
             return ResponseEntity.status(HttpStatus.CREATED).body(response);

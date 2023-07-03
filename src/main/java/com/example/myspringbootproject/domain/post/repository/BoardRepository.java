@@ -1,18 +1,18 @@
 package com.example.myspringbootproject.domain.post.repository;
 
 
-import com.example.myspringbootproject.domain.post.dto.PostDTO;
+import com.example.myspringbootproject.domain.post.dto.Post;
 
 import java.util.List;
 
 public interface BoardRepository {
-    boolean createPost(PostDTO postDTO);
+    boolean createPost(Post post);
 
-    List<PostDTO> findAllPosts();
+    List<Post> findAllPosts();
 
-    PostDTO findPostById(int id);
+    Post findPostById(int id);
 
-    boolean updatePost(PostDTO postDTO);
+    boolean updatePost(Post post);
 
 
 
