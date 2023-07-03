@@ -4,11 +4,13 @@ import com.example.myspringbootproject.common.exception.UserNotFoundException;
 import com.example.myspringbootproject.domain.post.dto.AddPostRequest;
 import com.example.myspringbootproject.domain.post.dto.Post;
 import com.example.myspringbootproject.domain.post.dto.UpdatePostRequest;
+import com.example.myspringbootproject.domain.post.model.PostEntity;
 import com.example.myspringbootproject.domain.post.repository.PostRepository;
 import com.example.myspringbootproject.domain.post.service.PostService;
 import com.example.myspringbootproject.domain.user.dto.UserDTO;
 import com.example.myspringbootproject.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.hibernate.sql.Update;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -172,6 +175,37 @@ class PostControllerTest {
         resultActions
             .andExpect(status().isOk());
 
+    }
+
+    @Test
+    public void 포스트_삭제_컨트롤러_테스트() throws Exception, UserNotFoundException {
+        //given
+        String url = "/api/post/{id}";
+        String title = "title";
+        String content = "content";
+
+        long userId = getUserEntity();
+
+        AddPostRequest userRequest = new AddPostRequest();
+        userRequest.setUserId(userId);
+        userRequest.setTitle(title);
+        userRequest.setContent(content);
+        userRequest.setCtgId(10);
+
+        Post savedPost = createPostTest(title, content, 10, userId);
+
+        //when
+        // 설정한 내용 바탕으로 요청 전송
+        ResultActions resultActions = mockMvc.perform(delete(url, savedPost.getId()));
+
+
+        //then
+        System.out.println("resultActions = " + resultActions.andReturn().getResponse().getContentAsString());
+        resultActions
+            .andExpect(status().isOk());
+
+        List<PostEntity> posts = postRepository.findAll();
+        Assertions.assertThat(posts).isEmpty();
     }
 
     private long getUserEntity() {

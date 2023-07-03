@@ -11,5 +11,7 @@ public interface PostService {
     Post createPost(AddPostRequest request) throws UserNotFoundException;
     List<Post> findAll();
     Post findPostById(Long id);
-    Post updatePost(Long id, UpdatePostRequest request);
+    Post updatePostById(Long id, UpdatePostRequest request);
+    List<Post> deletePostById(long id);
+
 }

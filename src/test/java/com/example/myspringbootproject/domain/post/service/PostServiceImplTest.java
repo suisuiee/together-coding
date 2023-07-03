@@ -4,7 +4,6 @@ import com.example.myspringbootproject.common.exception.UserNotFoundException;
 import com.example.myspringbootproject.domain.post.dto.AddPostRequest;
 import com.example.myspringbootproject.domain.post.dto.Post;
 import com.example.myspringbootproject.domain.post.dto.UpdatePostRequest;
-import com.example.myspringbootproject.domain.post.model.PostEntity;
 import com.example.myspringbootproject.domain.user.dto.UserDTO;
 import com.example.myspringbootproject.domain.user.repository.UserRepository;
 import com.example.myspringbootproject.domain.user.service.UserService;
@@ -16,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -191,7 +189,7 @@ class PostServiceImplTest {
         Post post1 = postService.createPost(addPostRequest1);
 
         //when
-        Post updatedPost = postService.updatePost(userId, updatePostRequest);
+        Post updatedPost = postService.updatePostById(userId, updatePostRequest);
         System.out.println("updatedPost = " + updatedPost);
 
         //then
@@ -203,6 +201,28 @@ class PostServiceImplTest {
 
     }
 
+    @Test
+    public void 포스트_삭제_업데이트() throws Exception, UserNotFoundException {
+        //given
+        AddPostRequest addPostRequest1 = new AddPostRequest();
+        addPostRequest1.setTitle("게시글 테스트 타이틀");
+        addPostRequest1.setContent("게시글 테스트 컨텐츠");
+        addPostRequest1.setCtgId(10);
+
+        long userId = getUserEntity();
+        addPostRequest1.setUserId(userId);
+
+        Post post1 = postService.createPost(addPostRequest1);
+        System.out.println("postService = " + postService.findAll());
+
+        //when
+        List<Post> posts = postService.deletePostById(post1.getId());
+        System.out.println("posts = " + posts);
+
+        //then
+
+
+    }
     private long getUserEntity() {
         UserDTO userDTO = UserDTO.builder()
             .name("김크앙")

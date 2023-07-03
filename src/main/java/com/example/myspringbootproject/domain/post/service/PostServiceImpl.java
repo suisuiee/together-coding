@@ -7,7 +7,6 @@ import com.example.myspringbootproject.domain.post.dto.UpdatePostRequest;
 import com.example.myspringbootproject.domain.post.mapper.PostMapper;
 import com.example.myspringbootproject.domain.post.model.PostEntity;
 import com.example.myspringbootproject.domain.post.repository.PostRepository;
-import com.example.myspringbootproject.domain.user.mapper.UserMapper;
 import com.example.myspringbootproject.domain.user.model.UserEntity;
 import com.example.myspringbootproject.domain.user.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -84,9 +83,15 @@ public class PostServiceImpl implements PostService {
         return post;
     }
 
+    /**
+     * 게시글 업데이트
+     * @param id
+     * @param request
+     * @return
+     */
     @Override
     @Transactional
-    public Post updatePost(Long id, UpdatePostRequest request) {
+    public Post updatePostById(Long id, UpdatePostRequest request) {
         PostEntity postEntity = postRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("post not found " + id));
 
@@ -96,5 +101,19 @@ public class PostServiceImpl implements PostService {
         // Entity -> DTO
         Post post = PostMapper.INSTANCE.toDTO(postEntity);
         return post;
+    }
+
+    @Override
+    @Transactional
+    public List<Post> deletePostById(long id) {
+
+        try{
+            postRepository.deleteById(id);
+            System.out.println("삭제 성공 " + id);
+        } catch (Exception e){
+            throw new IllegalStateException(id + " 게시물은 없습니다.");
+        }
+        List<Post> posts = findAll();
+        return posts;
     }
 }
